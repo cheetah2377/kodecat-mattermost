@@ -1,0 +1,36 @@
+# =============================================================================
+# kodemeio-mattermost - Git Ignore
+# =============================================================================
+
+# Environment files with secrets
+.env
+.env.prod
+.env.local
+.env.*.local
+
+# Docker volumes (local dev)
+data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups (local)
+*.sql
+*.sql.gz
+*.dump
+
+# Logs
+*.log
+
+# Secrets
+*.pem
+*.key
+secrets/
