@@ -111,3 +111,10 @@ All resource limits are configurable via environment variables:
 | `MEMORY_LIMIT_DB` | 1G | PostgreSQL |
 | `CPU_LIMIT_BACKUP` | 0.25 | Backup |
 | `MEMORY_LIMIT_BACKUP` | 128M | Backup |
+
+## Development
+
+```bash
+make test    # Run validation tests
+make lint    # Run linters
+```

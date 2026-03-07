@@ -162,3 +162,10 @@ Loki queries:
 - The `.env.prod` is gitignored; `.env.example` is the template
 - Backup uses separate S3 credentials (`S3_BACKUP_*`) from file storage (`MM_FILESETTINGS_AMAZONS3*`)
 - Service names in compose: `mm-postgres`, `mattermost`, `mm-backup`
+
+## Testing & CI
+
+- `tests/` — Validation and lint tests
+- `.github/workflows/validate.yml` — CI pipeline (runs on push/PR)
+- `SECURITY.md` — Security policy
+- `CHANGELOG.md` — Release history
