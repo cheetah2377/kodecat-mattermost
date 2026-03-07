@@ -1,21 +1,12 @@
 # =============================================================================
-# Mattermost Team Edition - Production (Dokploy)
+# Mattermost Team Edition - Local Development
 # =============================================================================
-# Deploy via Dokploy: Git source -> docker-compose.prod.yml
-# Uses internal PostgreSQL database with S3 backup sidecar.
+# Local dev: builds from source, no deploy limits, no Traefik labels.
 #
-# Configuration via environment variables (.env.prod):
-#   MM_DOMAIN                     - Domain for Traefik routing (chat.kodeme.io)
-#   MM_POSTGRESQL_PASSWORD        - PostgreSQL password
-#   AUTHENTIK_MATTERMOST_CLIENT_ID - OAuth2 client ID from Authentik
-#   AUTHENTIK_MATTERMOST_CLIENT_SECRET - OAuth2 client secret
-#
-# Deployment:
-#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
-#
-# Verification:
-#   docker compose -f docker-compose.prod.yml --env-file .env.prod ps
-#   curl -I https://chat.kodeme.io
+# Usage:
+#   cp .env.example .env
+#   docker compose up -d --build
+#   open http://localhost:8065
 # =============================================================================
 
 # Logging configuration with rotation
@@ -35,14 +26,12 @@ volumes:
   mm-bleve-indexes:
 
 networks:
-  dokploy-network:
-    external: true
   mm-internal:
     driver: bridge
 
 services:
   # ---------------------------------------------------------------------------
-  # PostgreSQL 16 — Database
+  # PostgreSQL 16 - Database
   # ---------------------------------------------------------------------------
   mm-postgres:
     image: postgres:16-alpine
@@ -58,21 +47,6 @@ services:
       POSTGRES_DB: "${MM_POSTGRESQL_NAME:-mattermost}"
     volumes:
       - mm-postgres-data:/var/lib/postgresql/data
-    labels:
-      - "logging=promtail"
-      - "logging.format=postgres"
-      - "app=mattermost"
-      - "app.tenant=${TENANT:-kodemeio}"
-      - "app.component=database"
-      - "app.service=mattermost-postgres"
-    deploy:
-      resources:
-        limits:
-          cpus: "${CPU_LIMIT_DB:-1}"
-          memory: ${MEMORY_LIMIT_DB:-1G}
-        reservations:
-          cpus: "0.25"
-          memory: 256M
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${MM_POSTGRESQL_USER:-mmuser} -d ${MM_POSTGRESQL_NAME:-mattermost}"]
       interval: 10s
@@ -80,16 +54,19 @@ services:
       retries: 5
 
   # ---------------------------------------------------------------------------
-  # Mattermost — Chat Application
+  # Mattermost - Chat Application
   # ---------------------------------------------------------------------------
   mattermost:
-    image: ghcr.io/tgunawandev/kodemeio-mattermost/mattermost:${MM_IMAGE_TAG:-10.5}
-    pull_policy: always
+    build:
+      context: .
+      args:
+        MM_IMAGE_TAG: ${MM_IMAGE_TAG:-10.5}
     restart: unless-stopped
     logging: *default-logging
+    ports:
+      - "8065:8065"
     networks:
       - mm-internal
-      - dokploy-network
     depends_on:
       mm-postgres:
         condition: service_healthy
@@ -99,7 +76,7 @@ services:
       MM_SQLSETTINGS_DRIVERNAME: "postgres"
       MM_SQLSETTINGS_DATASOURCE: "postgres://${MM_POSTGRESQL_USER:-mmuser}:${MM_POSTGRESQL_PASSWORD}@mm-postgres:5432/${MM_POSTGRESQL_NAME:-mattermost}?sslmode=disable&connect_timeout=10"
       # Site URL
-      MM_SERVICESETTINGS_SITEURL: "https://${MM_DOMAIN}"
+      MM_SERVICESETTINGS_SITEURL: "http://localhost:8065"
       MM_SERVICESETTINGS_ENABLEOAUTHSERVICEPROVIDER: "true"
       # Authentik SSO (GitLab provider)
       MM_GITLABSETTINGS_ENABLE: "true"
@@ -150,30 +127,6 @@ services:
       - mm-plugins:/mattermost/plugins
       - mm-client-plugins:/mattermost/client/plugins
       - mm-bleve-indexes:/mattermost/bleve-indexes
-    labels:
-      # Traefik routing (HTTPS)
-      - "traefik.enable=true"
-      - "traefik.docker.network=dokploy-network"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.rule=Host(`${MM_DOMAIN}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.entrypoints=websecure"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.tls=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.tls.certresolver=letsencrypt"
-      - "traefik.http.services.${COMPOSE_PROJECT_NAME:-mattermost}.loadbalancer.server.port=8065"
-      # Monitoring labels (Grafana Alloy/Loki)
-      - "logging=promtail"
-      - "logging.format=json"
-      - "app=mattermost"
-      - "app.tenant=${TENANT:-kodemeio}"
-      - "app.component=web"
-      - "app.service=mattermost-web"
-    deploy:
-      resources:
-        limits:
-          cpus: "${CPU_LIMIT_MM:-2}"
-          memory: ${MEMORY_LIMIT_MM:-2G}
-        reservations:
-          cpus: "0.5"
-          memory: 512M
     healthcheck:
       test: ["CMD", "/mattermost/bin/mmctl", "--local", "system", "status"]
       interval: 30s
@@ -182,11 +135,10 @@ services:
       start_period: 120s
 
   # ---------------------------------------------------------------------------
-  # Backup — S3 pg_dump sidecar
+  # Backup - S3 pg_dump sidecar
   # ---------------------------------------------------------------------------
   mm-backup:
-    image: ghcr.io/tgunawandev/kodemeio-mattermost/backup:latest
-    pull_policy: always
+    build: ./backup
     restart: unless-stopped
     logging: *default-logging
     environment:
@@ -204,22 +156,8 @@ services:
       - BACKUP_RETENTION_DAILY=${BACKUP_RETENTION_DAILY:-7}
       - BACKUP_RETENTION_WEEKLY=${BACKUP_RETENTION_WEEKLY:-4}
       - TZ=${TZ:-Asia/Jakarta}
-    labels:
-      - "logging=promtail"
-      - "app=mattermost"
-      - "app.tenant=${TENANT:-kodemeio}"
-      - "app.component=backup"
-      - "app.service=mattermost-backup"
     networks:
       - mm-internal
     depends_on:
       mm-postgres:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          cpus: "${CPU_LIMIT_BACKUP:-0.25}"
-          memory: ${MEMORY_LIMIT_BACKUP:-128M}
-        reservations:
-          cpus: "0.1"
-          memory: 64M

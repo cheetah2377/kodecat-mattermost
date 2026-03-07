@@ -1,0 +1,21 @@
+# =============================================================================
+# Mattermost - Build Only
+# =============================================================================
+# Build and tag images for GHCR. Only services with custom Dockerfiles.
+#
+# Usage:
+#   docker compose -f docker-compose.build.yml build
+#   docker compose -f docker-compose.build.yml push
+# =============================================================================
+
+services:
+  mattermost:
+    image: ghcr.io/tgunawandev/kodemeio-mattermost/mattermost:${MM_IMAGE_TAG:-10.5}
+    build:
+      context: .
+      args:
+        MM_IMAGE_TAG: ${MM_IMAGE_TAG:-10.5}
+
+  mm-backup:
+    image: ghcr.io/tgunawandev/kodemeio-mattermost/backup:latest
+    build: ./backup
