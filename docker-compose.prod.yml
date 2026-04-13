@@ -151,14 +151,7 @@ services:
       - mm-client-plugins:/mattermost/client/plugins
       - mm-bleve-indexes:/mattermost/bleve-indexes
     labels:
-      # Traefik routing (HTTPS)
-      - "traefik.enable=true"
-      - "traefik.docker.network=dokploy-network"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.rule=Host(`${MM_DOMAIN}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.entrypoints=websecure"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.tls=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME:-mattermost}.tls.certresolver=letsencrypt"
-      - "traefik.http.services.${COMPOSE_PROJECT_NAME:-mattermost}.loadbalancer.server.port=8065"
+      # Traefik routing is managed by Dokploy (domain config); do not set here.
       # Monitoring labels (Grafana Alloy/Loki)
       - "logging=promtail"
       - "logging.format=json"
