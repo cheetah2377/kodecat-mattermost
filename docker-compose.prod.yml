@@ -90,6 +90,10 @@ services:
     networks:
       - mm-internal
       - dokploy-network
+    ports:
+      # Mattermost Calls RTC media server (UDP primary, TCP fallback)
+      - "8443:8443/udp"
+      - "8443:8443/tcp"
     depends_on:
       mm-postgres:
         condition: service_healthy
