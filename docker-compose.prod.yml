@@ -185,7 +185,8 @@ services:
   # Backup — S3 pg_dump sidecar
   # ---------------------------------------------------------------------------
   mm-backup:
-    image: ghcr.io/tgunawandev/kodemeio-mattermost/backup:latest
+    image: mattermost/mattermost-team-edition:latest
+    #image: ghcr.io/tgunawandev/kodemeio-mattermost/backup:latest
     pull_policy: always
     restart: unless-stopped
     logging: *default-logging
