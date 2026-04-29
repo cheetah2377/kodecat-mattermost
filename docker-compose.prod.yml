@@ -150,6 +150,11 @@ services:
       # Server
       MM_SERVICESETTINGS_ENABLEOPENSERVER: "${MM_SERVICESETTINGS_ENABLEOPENSERVER:-false}"
       MM_TEAMSETTINGS_MAXUSERSPERTEAM: "${MM_TEAMSETTINGS_MAXUSERSPERTEAM:-1000}"
+      # call
+      - MM_CALLS_ENABLED=true
+      - MM_CALLS_DEFAULT_ENABLED=true
+      - MM_CALLS_RTCD_ENABLED=true
+      - MM_CALLS_RTCD_URL=https://rtcd:8443
     volumes:
       - mm-config:/mattermost/config
       - mm-data:/mattermost/data
