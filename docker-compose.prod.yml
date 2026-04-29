@@ -183,7 +183,7 @@ services:
   # ---------------------------------------------------------------------------
   # call setting
   # ---------------------------------------------------------------------------
-  rtcd:   # ← LANGSUNG DI SINI
+  rtcd:  
     image: mattermost/rtcd:latest
     restart: unless-stopped
     ports:
