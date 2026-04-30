@@ -157,7 +157,8 @@ services:
       MM_CALLS_RTCD_URL: "http://rtcd:8045"
       MM_CALLS_RTCD_HOST: "mm.budiagung.com"
       MM_CALLS_RTCD_PORT: "8466"
-      MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com:3478"
+      # MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com:3478"
+      MM_CALLS_ICE_HOST_OVERRIDE: "178.104.117.64"
       # MM_CALLS_ICE_HOST_OVERRIDE: "turn:mm.budiagung.com:8466?transport=udp"
       MM_CALLS_ALLOW_TCP_FALLBACK: "true"
     volumes:
