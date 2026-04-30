@@ -94,8 +94,8 @@ services:
     ports:
       # Mattermost Calls RTC media server (UDP primary, TCP fallback)
       # Port 8466 chosen to avoid conflict with mailcow nginx on 8443
-      - "8466:8466/udp"
-      - "8466:8466/tcp"
+      - "8443:8443/udp"
+      - "8443:8443/tcp"
     depends_on:
       mm-postgres:
         condition: service_healthy
