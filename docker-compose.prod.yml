@@ -155,6 +155,7 @@ services:
       MM_CALLS_DEFAULT_ENABLED: "true"
       MM_CALLS_RTCD_ENABLED: "true"
       MM_CALLS_RTCD_URL: "http://rtcd:8045"
+      RTCD_LISTEN_ADDR: "0.0.0.0:8443"
     volumes:
       - mm-config:/mattermost/config
       - mm-data:/mattermost/data
@@ -191,11 +192,11 @@ services:
   rtcd:  
     image: mattermost/rtcd:latest
     restart: unless-stopped
-    ports:
-      - "8443:8443"
-      - "3478:3478/udp"
-    environment:
-      - RTCD_LISTEN_ADDR=0.0.0.0:8443
+  #  ports:
+  #    - "8443:8443"
+  #    - "3478:3478/udp"
+  #  environment:
+     
   
   # ---------------------------------------------------------------------------
   # Backup — S3 pg_dump sidecar
