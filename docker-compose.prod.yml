@@ -201,18 +201,18 @@ services:
      - "8466:8443/tcp"
      - "8466:8443/udp"
    #  - "3478:3478/udp"
-     - "8045:8045/tcp"
+   #  - "8045:8045/tcp"
    #  - "3478:3478/tcp"
     # - "49152-65535:49152-65535/udp"
     environment:
      RTCD_PUBLIC_IP: "178.104.117.64"
      RTCD_LISTEN_ADDR: "0.0.0.0:8443"
-#     RTCD_UDP_PORT: 8443
-#     RTCD_TCP_PORT: 8443
+     RTCD_UDP_PORT: 8443
+     RTCD_TCP_PORT: 8443
 #     RTCD_UDP_PORT: 3478
 #     RTCD_TCP_PORT: 3478
-#     RTCD_UDP_PORT: 8045
-#     RTCD_TCP_PORT: 8045
+     RTCD_UDP_PORT: 8045
+     RTCD_TCP_PORT: 8045
      RTCD_API_SECURITY_ALLOW_SELF_REGISTRATION: "true"   # ← tambahkan
      RTCD_LOG_FILE: "/var/log/rtcd/rtcd.log"
     networks:
