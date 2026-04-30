@@ -192,9 +192,9 @@ services:
   rtcd:  
     image: mattermost/rtcd:latest
     restart: unless-stopped
-  #  ports:
-  #    - "8443:8443"
-  #    - "3478:3478/udp"
+    ports:
+     - "8443:8443"
+     - "3478:3478/udp"
   #  environment:
      
   
