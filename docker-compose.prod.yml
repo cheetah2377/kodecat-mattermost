@@ -201,10 +201,13 @@ services:
      - "8466:8443/tcp"
      - "8466:8443/udp"
      - "3478:3478/udp"
+     - "8045:8045/tcp"
     environment:
      RTCD_PUBLIC_IP: "178.104.117.64"
      RTCD_LISTEN_ADDR: "0.0.0.0:8443"
-  
+     RTCD_API_SECURITY_ALLOW_SELF_REGISTRATION: "true"   # ← tambahkan
+    networks:
+     - mm-internal    # ← harus sama network dengan mattermost
   # ---------------------------------------------------------------------------
   # Backup — S3 pg_dump sidecar
   # ---------------------------------------------------------------------------
