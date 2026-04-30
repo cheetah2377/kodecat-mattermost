@@ -155,7 +155,7 @@ services:
       MM_CALLS_DEFAULT_ENABLED: "true"
       MM_CALLS_RTCD_ENABLED: "true"
       MM_CALLS_RTCD_URL: "http://rtcd:8045"
-      MM_CALLS_ICE_HOST_OVERRIDE: "178.104.117.64"
+      MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com"
       MM_CALLS_ALLOW_TCP_FALLBACK: "true"
     volumes:
       - mm-config:/mattermost/config
