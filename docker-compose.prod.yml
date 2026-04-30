@@ -194,8 +194,8 @@ services:
     image: mattermost/rtcd:latest
     restart: unless-stopped
     ports:
-     - "8443:8443/tcp"
-     - "8443:8443/udp"
+     - "8466:8443/tcp"
+     - "8466:8443/udp"
      - "3478:3478/udp"
     environment:
      RTCD_PUBLIC_IP: "178.104.117.64"
