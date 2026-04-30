@@ -200,8 +200,8 @@ services:
     ports:
      - "8443:8443/tcp"
      - "8443:8443/udp"
-     - "8466:8466/tcp"
-     - "8466:8466/udp"
+     - "8466:8443/tcp"
+     - "8466:8443/udp"
      - "3478:3478/udp"
      - "8045:8045/tcp"
      - "3478:3478/tcp"
@@ -214,6 +214,10 @@ services:
      RTCD_API_SECURITY_ALLOW_SELF_REGISTRATION: "true"   # ← tambahkan
     networks:
      - mm-internal    # ← harus sama network dengan mattermost
+    sysctls:
+     - net.ipv4.ip_local_port_range=1024 65535
+     - net.ipv4.conf.all.rp_filter=0
+     - net.ipv4.conf.default.rp_filter=0   
   # ---------------------------------------------------------------------------
   # Backup — S3 pg_dump sidecar
   # ---------------------------------------------------------------------------
