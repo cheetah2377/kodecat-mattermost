@@ -94,8 +94,8 @@ services:
     ports:
       # Mattermost Calls RTC media server (UDP primary, TCP fallback)
       # Port 8466 chosen to avoid conflict with mailcow nginx on 8443
-      - "8466:8443/udp"
-      - "8466:8443/tcp"
+      # - "8466:8443/udp"
+      # - "8466:8443/tcp"
     depends_on:
       mm-postgres:
         condition: service_healthy
@@ -155,7 +155,8 @@ services:
       MM_CALLS_DEFAULT_ENABLED: "true"
       MM_CALLS_RTCD_ENABLED: "true"
       MM_CALLS_RTCD_URL: "http://rtcd:8045"
-      RTCD_LISTEN_ADDR: "0.0.0.0:8443"
+      MM_CALLS_ICE_HOST_OVERRIDE: "178.104.117.64"
+      MM_CALLS_ALLOW_TCP_FALLBACK: "true"
     volumes:
       - mm-config:/mattermost/config
       - mm-data:/mattermost/data
@@ -195,8 +196,9 @@ services:
     ports:
      - "8443:8443"
      - "3478:3478/udp"
-  #  environment:
-     
+    environment:
+     RTCD_PUBLIC_IP: "178.104.117.64"
+     RTCD_LISTEN_ADDR: "0.0.0.0:8443"
   
   # ---------------------------------------------------------------------------
   # Backup — S3 pg_dump sidecar
