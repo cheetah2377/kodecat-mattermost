@@ -217,6 +217,7 @@ services:
 #     RTCD_TCP_PORT: 3478
      RTCD_UDP_PORT: 8045
      RTCD_TCP_PORT: 8045
+     MM_CALLS_TURN_SERVERS: '[{"urls":["turn:openrelay.metered.ca:443?transport=tcp"],"username":"openrelayproject","credential":"openrelayproject"}]'
      RTCD_API_SECURITY_ALLOW_SELF_REGISTRATION: "true"   # ← tambahkan
      RTCD_LOG_FILE: "/var/log/rtcd/rtcd.log"
  #    MM_CALLS_ICE_HOST_OVERRIDE: "178.104.117.64:8466"
