@@ -217,7 +217,7 @@ services:
      RTCD_LOG_FILE: "/var/log/rtcd/rtcd.log"
  #    MM_CALLS_ICE_HOST_OVERRIDE: "178.104.117.64:8466"
      MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com"
-     MM_CALLS_ICESERVERS: '[{"urls":["stun:178.104.117.64:3478","turn:178.104.117.64:3478?transport=udp"],"username":"turnuser","credential":"lmulah89"}]'
+  #   MM_CALLS_ICESERVERS: '[{"urls":["stun:178.104.117.64:3478","turn:178.104.117.64:3478?transport=udp"],"username":"turnuser","credential":"lmulah89"}]'
     networks:
      - mm-internal    # ← harus sama network dengan mattermost
     sysctls:
