@@ -162,6 +162,7 @@ services:
       # MM_CALLS_ICE_HOST_OVERRIDE: "turn:mm.budiagung.com:8466?transport=udp"
       MM_CALLS_ALLOW_TCP_FALLBACK: "true"
       MM_CALLS_RTC_SERVER_ADVERTISE_ADDRESS: "178.104.117.64:8443"
+      MM_CALLS_TURN_SERVERS: '[{"urls":["turn:openrelay.metered.ca:443?transport=tcp"],"username":"openrelayproject","credential":"openrelayproject"}]'
       MM_CALLS_ICE_SERVERS_CONFIGS: '[{"urls":["turn:openrelay.metered.ca:443?transport=tcp"],"username":"openrelayproject","credential":"openrelayproject"}]'
       MM_CALLS_ICE_TRANSPORTS: "relay"
     volumes:
