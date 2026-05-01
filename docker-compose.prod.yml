@@ -154,7 +154,7 @@ services:
       MM_CALLS_ENABLED: "true"
       MM_CALLS_DEFAULT_ENABLED: "true"
       MM_CALLS_RTCD_ENABLED: "true"
-      MM_CALLS_RTCD_URL: "http://rtcd:8045"
+    # MM_CALLS_RTCD_URL: "http://rtcd:8045"
       MM_CALLS_RTCD_HOST: "mm.budiagung.com"
       MM_CALLS_RTCD_PORT: "8466"
       # MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com:3478"
