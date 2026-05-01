@@ -151,8 +151,8 @@ services:
       MM_SERVICESETTINGS_ENABLEOPENSERVER: "${MM_SERVICESETTINGS_ENABLEOPENSERVER:-false}"
       MM_TEAMSETTINGS_MAXUSERSPERTEAM: "${MM_TEAMSETTINGS_MAXUSERSPERTEAM:-1000}"
       # call
-      MM_CALLS_ENABLED: "true"
-      MM_CALLS_DEFAULT_ENABLED: "true"
+    #  MM_CALLS_ENABLED: "true"
+    #  MM_CALLS_DEFAULT_ENABLED: "true"
     # MM_CALLS_RTCD_ENABLED: "false"
     # MM_CALLS_RTCD_URL: "http://rtcd:8045"
       MM_CALLS_RTCD_HOST: "mm.budiagung.com"
@@ -160,6 +160,9 @@ services:
       # MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com:3478"
       # MM_CALLS_ICE_HOST_OVERRIDE: "178.104.117.64"
       # MM_CALLS_ICE_HOST_OVERRIDE: "turn:mm.budiagung.com:8466?transport=udp"
+      MM_CALLS_ENABLED: "true"
+      MM_CALLS_DEFAULT_ENABLED: "true"
+      MM_CALLS_RTCD_ENABLED: "false"
       MM_CALLS_ALLOW_TCP_FALLBACK: "true"
       MM_CALLS_RTC_SERVER_ADVERTISE_ADDRESS: "178.104.117.64:8443"
       MM_CALLS_TURN_SERVERS: '[{"urls":["turn:openrelay.metered.ca:443?transport=tcp"],"username":"openrelayproject","credential":"openrelayproject"}]'
