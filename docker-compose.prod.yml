@@ -239,6 +239,7 @@ services:
     environment:
      RTCD_PUBLIC_IP: "178.104.117.64"
      RTCD_LISTEN_ADDR: "0.0.0.0:8443"
+     RTCD_RTC_ADVERTISE_ADDRESS: "mm.budiagung.com:8466"
      RTCD_UDP_PORT: 8443
      RTCD_TCP_PORT: 8443
 #     RTCD_UDP_PORT: 3478
