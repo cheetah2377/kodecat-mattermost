@@ -26,13 +26,28 @@ x-logging: &default-logging
     max-file: "5"
 
 volumes:
-  mm-postgres-data:
-  mm-config:
-  mm-data:
-  mm-logs:
-  mm-plugins:
-  mm-client-plugins:
-  mm-bleve-indexes:
+  matter-mmost-e7pot7_mm-postgres-data:
+    external: true
+  matter-mmost-e7pot7_mm-config:
+    external: true
+  matter-mmost-e7pot7_mm-data:
+    external: true
+  matter-mmost-e7pot7_mm-logs:
+    external: true
+  matter-mmost-e7pot7_mm-plugins:
+    external: true
+  matter-mmost-e7pot7_mm-client-plugins:
+    external: true
+  matter-mmost-e7pot7_mm-bleve-indexes:
+    external: true
+    
+#  mm-postgres-data:
+#  mm-config:
+#  mm-data:
+#  mm-logs:
+#  mm-plugins:
+#  mm-client-plugins:
+#  mm-bleve-indexes:
 
 networks:
   dokploy-network:
@@ -57,7 +72,8 @@ services:
       POSTGRES_PASSWORD: "${MM_POSTGRESQL_PASSWORD}"
       POSTGRES_DB: "${MM_POSTGRESQL_NAME:-mattermost}"
     volumes:
-      - mm-postgres-data:/var/lib/postgresql/data
+      - matter-mmost-e7pot7_mm-postgres-data:/var/lib/postgresql/data
+  #    - mm-postgres-data:/var/lib/postgresql/data
     labels:
       - "logging=promtail"
       - "logging.format=postgres"
@@ -169,12 +185,19 @@ services:
       MM_CALLS_ICE_SERVERS_CONFIGS: '[{"urls":["turn:openrelay.metered.ca:443?transport=tcp"],"username":"openrelayproject","credential":"openrelayproject"}]'
       MM_CALLS_ICE_TRANSPORTS: "relay"
     volumes:
-      - mm-config:/mattermost/config
-      - mm-data:/mattermost/data
-      - mm-logs:/mattermost/logs
-      - mm-plugins:/mattermost/plugins
-      - mm-client-plugins:/mattermost/client/plugins
-      - mm-bleve-indexes:/mattermost/bleve-indexes
+      - matter-mmost-e7pot7_mm-config:/mattermost/config
+      - matter-mmost-e7pot7_mm-data:/mattermost/data
+      - matter-mmost-e7pot7_mm-logs:/mattermost/logs
+      - matter-mmost-e7pot7_mm-plugins:/mattermost/plugins
+      - matter-mmost-e7pot7_mm-client-plugins:/mattermost/client/plugins
+      - matter-mmost-e7pot7_mm-bleve-indexes:/mattermost/bleve-indexes
+    
+   #   - mm-config:/mattermost/config
+   #   - mm-data:/mattermost/data
+   #   - mm-logs:/mattermost/logs
+   #   - mm-plugins:/mattermost/plugins
+   #   - mm-client-plugins:/mattermost/client/plugins
+   #   - mm-bleve-indexes:/mattermost/bleve-indexes
     labels:
       # Traefik routing is managed by Dokploy (domain config); do not set here.
       # Monitoring labels (Grafana Alloy/Loki)
