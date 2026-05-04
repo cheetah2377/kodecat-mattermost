@@ -184,7 +184,7 @@ services:
    #  MM_CALLS_ICE_HOST_OVERRIDE: "mm.budiagung.com"
    #  MM_CALLS_RTC_SERVER_ADVERTISE_ADDRESS: "mm.budiagung.com:8466"      
       MM_CALLS_RTC_SERVER_ADVERTISE_ADDRESS: "178.104.117.64:8466"
-      MM_CALLS_TURN_SERVERS: '[{"urls":["turn:178.104.117.64:3478?transport=udp"],"username": "turnuser","credential": "lmulah89"}]'
+      MM_CALLS_TURN_SERVERS: '[{"urls":["turn:178.104.117.64:3478?transport=udp","turn:178.104.117.64:3478?transport=tcp","turns:178.104.117.64:5349?transport=tcp"],"username": "turnuser","credential": "lmulah89"}]'
    #  MM_CALLS_ICE_SERVERS_CONFIGS: '[{"urls":["turn:openrelay.metered.ca:443?transport=tcp"],"username":"openrelayproject","credential":"openrelayproject"}]'
       MM_CALLS_ICE_TRANSPORTS: "all"
     volumes:
